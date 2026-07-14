@@ -1,0 +1,7 @@
+package com.asiselectronics.tflappproject
+
+interface Platform {
+    val name: String
+}
+
+expect fun getPlatform(): Platform

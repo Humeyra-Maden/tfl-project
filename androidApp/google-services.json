@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1085484776539",
+    "project_id": "tflappproject",
+    "storage_bucket": "tflappproject.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085484776539:android:04e619a927c80f3872137e",
+        "android_client_info": {
+          "package_name": "com.asiselectronics.tflappproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhku0jCo0TsYaybZ4a2MM1B4kjSvvp0Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
