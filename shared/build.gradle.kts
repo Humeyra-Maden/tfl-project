@@ -44,6 +44,7 @@ kotlin {
             implementation("com.google.firebase:firebase-messaging")
             implementation("com.google.firebase:firebase-crashlytics")
             implementation("com.google.firebase:firebase-analytics")
+            implementation("io.ktor:ktor-client-okhttp:3.0.3")
 
         }
         commonMain.dependencies {
@@ -57,10 +58,17 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.2")
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+            implementation("io.ktor:ktor-client-core:3.0.3")
+            implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        iosMain.dependencies{
+            implementation("io.ktor:ktor-client-darwin:3.0.3")
         }
     }
 }
