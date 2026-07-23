@@ -12,4 +12,5 @@ sealed class Screen(val route: String) {
     object LiveVehicles : Screen("live_vehicles")
     object StopsMap : Screen("stops_map")
     object Favorites : Screen("favorites")
+    object StopSearch : Screen("stop_search")
 }

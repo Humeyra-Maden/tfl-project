@@ -1,5 +1,6 @@
 package com.asiselectronics.tflappproject.presentation.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,10 +34,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import com.asiselectronics.tflappproject.data.remote.TflApiService
+import kotlinx.coroutines.launch
+
 
 
 data class HubItem(
@@ -54,8 +60,9 @@ fun HomeScreen(
     onNavigateToLiveVehicles: () -> Unit,
     onNavigateToStopsMap: () -> Unit,
     onNavigateToFavorites: () -> Unit,
+    onNavigateToStopSearch: () -> Unit
 ) {
-    var searchQuery by remember { mutableStateOf("")}
+
 
     val hubItems = listOf(
         HubItem("Hat Hareket Saatleri", Icons.Default.Schedule, onNavigateToSchedules),
@@ -89,17 +96,41 @@ fun HomeScreen(
                 .padding(16.dp)
         ) {
             OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
+                value = "",
+                onValueChange = { },
                 placeholder = { Text("Hat/Durak Ara") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null)},
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigateToStopSearch() },
+                enabled = false,
                 singleLine = true
             )
+            val scope = rememberCoroutineScope()
+            val apiService = remember { TflApiService() }
+
+            Button(onClick = {
+                scope.launch {
+                    val result = apiService.searchStopPoints("oxford circus")
+                    result.fold(
+                        onSuccess = { response ->
+                            println("BAŞARILI: ${response.matches.size} durak bulundu")
+                            response.matches.take(3).forEach {
+                                println("  - ${it.name} (${it.id})")
+                            }
+                        },
+                        onFailure = { error ->
+                            println("HATA: ${error.message}")
+                        }
+                    )
+                }
+            }) {
+                Text("API Test Et")
+            }
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(top = 40.dp),
+                contentPadding = PaddingValues(top = 120.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.fillMaxSize()

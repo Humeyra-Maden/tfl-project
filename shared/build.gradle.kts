@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     id("com.google.gms.google-services")
     //id("com.google.firebase.crashlytics")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 kotlin {

@@ -16,6 +16,7 @@ import com.asiselectronics.tflappproject.presentation.auth.login.LoginScreen
 import com.asiselectronics.tflappproject.presentation.auth.register.RegisterScreen
 import com.asiselectronics.tflappproject.presentation.home.HomeScreen
 import com.asiselectronics.tflappproject.presentation.splash.SplashScreen
+import com.asiselectronics.tflappproject.presentation.stopsearch.StopSearchScreen
 
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController()) {
@@ -66,6 +67,9 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
                 },
                 onNavigateToFavorites = {
                     navController.navigate(Screen.Favorites.route)
+                },
+                onNavigateToStopSearch = {
+                    navController.navigate(Screen.StopSearch.route)
                 }
             )
         }
@@ -117,16 +121,14 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
             }
         }
 
-        composable(Screen.StopsMap.route){
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Text(
-                    text = ("Duraklar sayfası yakında"),
-                    fontSize = 20.sp
-                )
-            }
+        composable(Screen.StopSearch.route){
+            StopSearchScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onStopSelected = { stop ->
+                    // Şimdilik sadece geri dön, ileride durak detay ekranına gidecek
+                    navController.popBackStack()
+                }
+            )
         }
         composable(Screen.Favorites.route){
             Box(
