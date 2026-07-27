@@ -44,3 +44,12 @@ actual suspend fun registerUser(email: String, password: String): Result<Unit>{
 
     }
 }
+
+
+actual fun getCurrentUserEmail(): String? {
+    return FirebaseAuth.getInstance().currentUser?.email
+}
+
+actual fun logoutUser() {
+    FirebaseAuth.getInstance().signOut()
+}

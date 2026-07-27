@@ -1,5 +1,4 @@
 package com.asiselectronics.tflappproject.navigation
-
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -9,14 +8,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.savedstate.read
+import com.asiselectronics.tflappproject.presentation.account.AccountScreen
+import com.asiselectronics.tflappproject.presentation.arrivals.ArrivalsScreen
 import com.asiselectronics.tflappproject.presentation.auth.login.LoginScreen
 import com.asiselectronics.tflappproject.presentation.auth.register.RegisterScreen
 import com.asiselectronics.tflappproject.presentation.home.HomeScreen
 import com.asiselectronics.tflappproject.presentation.splash.SplashScreen
 import com.asiselectronics.tflappproject.presentation.stopsearch.StopSearchScreen
+import org.jetbrains.compose.resources.getString
+import com.asiselectronics.tflappproject.presentation.lines.LinesScreen
 
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController()) {
@@ -70,6 +76,9 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
                 },
                 onNavigateToStopSearch = {
                     navController.navigate(Screen.StopSearch.route)
+                },
+                onNavigateToLines = {
+                    navController.navigate(Screen.Lines.route)
                 }
             )
         }
@@ -87,15 +96,14 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
 
         }
         composable(Screen.Account.route){
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Text(
-                    text = ("Hesabım sayfası yakında"),
-                    fontSize = 20.sp
-                )
-            }
+            AccountScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onLoggedOut = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(0) // tüm back stack'i temizle, geri tuşuyla Home'a dönülmesin
+                    }
+                }
+            )
         }
         composable(Screen.Schedules.route){
             Box(
@@ -125,8 +133,7 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
             StopSearchScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onStopSelected = { stop ->
-                    // Şimdilik sadece geri dön, ileride durak detay ekranına gidecek
-                    navController.popBackStack()
+                    navController.navigate(Screen.Arrivals.createRoute(stop.id, stop.name))
                 }
             )
         }
@@ -151,6 +158,43 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
                     }
                 },
                 onNavigateToLogin = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(
+            route = Screen.Arrivals.route,
+            arguments = listOf(
+                navArgument("stopId") { type = NavType.StringType },
+                navArgument("stopName") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val stopId = backStackEntry.arguments?.read{getString("stopId")} ?: ""
+            val stopName = backStackEntry.arguments?.read{getString("stopName")} ?: ""
+            ArrivalsScreen(
+                stopId = stopId,
+                stopName = stopName,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.StopsMap.route){
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    text = ("Duraklar haritası yakında gelecek"),
+                    fontSize = 20.sp
+                )
+            }
+        }
+
+        composable(Screen.Lines.route){
+            LinesScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onLineSelected = {line ->
                     navController.popBackStack()
                 }
             )

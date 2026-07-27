@@ -1,5 +1,7 @@
 package com.asiselectronics.tflappproject.data.remote
 
+import com.asiselectronics.tflappproject.data.remote.dto.ArrivalDto
+import com.asiselectronics.tflappproject.data.remote.dto.LineSearchResponseDto
 import com.asiselectronics.tflappproject.data.remote.dto.StopPointSearchResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -19,4 +21,24 @@ class TflApiService(private val client: HttpClient = createHttpClient()){
         }
     }
 
+    suspend fun getArrivals(naptanId: String): Result<List<ArrivalDto>> {
+        return try {
+            val response: List<ArrivalDto> =
+                client.get("$baseUrl/StopPoint/$naptanId/Arrivals").body()
+            Result.success(response.sortedBy { it.timeToStationSeconds })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun searchLines(query: String) : Result<LineSearchResponseDto> {
+        return try {
+            val response: LineSearchResponseDto =
+                client.get("$baseUrl/Line/Search/$query").body()
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
+

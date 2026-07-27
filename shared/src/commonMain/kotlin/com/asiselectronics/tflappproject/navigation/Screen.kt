@@ -13,4 +13,13 @@ sealed class Screen(val route: String) {
     object StopsMap : Screen("stops_map")
     object Favorites : Screen("favorites")
     object StopSearch : Screen("stop_search")
+
+    object Arrivals : Screen("arrivals/{stopId}/{stopName}") {
+        fun createRoute(stopId: String, stopName: String): String {
+            val safeName = stopName.replace(" ", "_")
+            return "arrivals/$stopId/$safeName"
+        }
+    }
+
+    object Lines : Screen("lines")
 }

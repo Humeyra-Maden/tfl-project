@@ -12,3 +12,8 @@ actual suspend fun loginUser(email:String, password:String): Result<Unit>{
 actual suspend fun registerUser(email: String, password: String): Result<Unit>{
     return Result.failure(NotImplementedError("İOS firebase entegrasyonu daha yapılmadı"))
 }
+actual fun getCurrentUserEmail(): String? = null
+
+actual fun logoutUser() {
+    // iOS Firebase entegrasyonu henüz yapılmadı
+}

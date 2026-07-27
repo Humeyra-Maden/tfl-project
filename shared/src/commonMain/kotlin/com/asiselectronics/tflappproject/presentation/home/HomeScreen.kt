@@ -60,12 +60,13 @@ fun HomeScreen(
     onNavigateToLiveVehicles: () -> Unit,
     onNavigateToStopsMap: () -> Unit,
     onNavigateToFavorites: () -> Unit,
-    onNavigateToStopSearch: () -> Unit
+    onNavigateToStopSearch: () -> Unit,
+    onNavigateToLines: () -> Unit
 ) {
 
 
     val hubItems = listOf(
-        HubItem("Hat Hareket Saatleri", Icons.Default.Schedule, onNavigateToSchedules),
+        HubItem("Hatlar", Icons.Default.DirectionsBus, onNavigateToLines),
         HubItem("Ulaşım Araçları", Icons.Default.DirectionsBus, onNavigateToLiveVehicles),
         HubItem("Duraklar", Icons.Default.LocationOn, onNavigateToStopsMap),
         HubItem("Favoriler", Icons.Default.Star, onNavigateToFavorites)
