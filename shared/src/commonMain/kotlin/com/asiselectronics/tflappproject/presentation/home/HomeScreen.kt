@@ -42,7 +42,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import com.asiselectronics.tflappproject.data.remote.TflApiService
 import kotlinx.coroutines.launch
-
+import org.jetbrains.compose.resources.stringResource
+import tflappproject.shared.generated.resources.Res
+import tflappproject.shared.generated.resources.test
 
 
 data class HubItem(
@@ -69,7 +71,7 @@ fun HomeScreen(
         HubItem("Hatlar", Icons.Default.DirectionsBus, onNavigateToLines),
         HubItem("Ulaşım Araçları", Icons.Default.DirectionsBus, onNavigateToLiveVehicles),
         HubItem("Duraklar", Icons.Default.LocationOn, onNavigateToStopsMap),
-        HubItem("Favoriler", Icons.Default.Star, onNavigateToFavorites)
+        HubItem(stringResource(Res.string.test), Icons.Default.Star, onNavigateToFavorites)
     )
 
     Scaffold(

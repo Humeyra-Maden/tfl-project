@@ -22,4 +22,16 @@ sealed class Screen(val route: String) {
     }
 
     object Lines : Screen("lines")
+
+    object LineDetail : Screen("line_detail/{lineId}/{lineName}"){
+        fun createRoute( lineId: String, lineName: String) : String{
+            val safeName = lineName.replace(" ", "_")
+            return "line_detail/$lineId/$safeName"
+        }
+    }
+    object Timetable : Screen("timetable/{lineId}/{fromStopId}") {
+        fun createRoute(lineId: String, fromStopId: String): String {
+            return "timetable/$lineId/$fromStopId"
+        }
+    }
 }

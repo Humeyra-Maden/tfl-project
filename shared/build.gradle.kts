@@ -63,6 +63,8 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
             implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+            implementation("androidx.datastore:datastore-preferences:1.1.1")
+            implementation("com.squareup.okio:okio:3.9.0")
 
         }
         commonTest.dependencies {
